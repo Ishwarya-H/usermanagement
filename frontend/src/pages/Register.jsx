@@ -1,14 +1,18 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
-import '../styles/shared.scss';
+import '../styles/_shared.scss';
 import './Register.scss';
 
 function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    resetField,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -19,36 +23,52 @@ function Register() {
   const rolePreference = watch('rolePreference');
   const password = watch('password');
 
+  useEffect(() => {
+    if (rolePreference === 'individual') {
+      resetField('groupName');
+      resetField('department');
+      resetField('justification');
+      resetField('teamSize');
+      resetField('managerName');
+      resetField('managerEmail');
+    }
+  }, [rolePreference, resetField]);
+
   const onSubmit = (data) => {
     console.log('Form submitted:', data);
-    alert('Registration form is valid! (API integration comes later)');
+    navigate('/login');
   };
 
   return (
     <div className="page-card register-card">
-      <h2>Register</h2>
+      <div className="brand-mark">
+        <span className="brand-dot"></span>
+        <span>User Management System</span>
+      </div>
+      <h2>Create your account</h2>
+      <p className="page-subtitle">Register as an individual user, or request group admin access.</p>
+
+      <div className={`role-badge ${rolePreference === 'groupAdmin' ? 'is-groupadmin' : ''}`}>
+        <span className="role-dot"></span>
+        {rolePreference === 'groupAdmin' ? 'Requesting: Group Admin' : 'Role: Individual User'}
+      </div>
+
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
         <div className="input-group">
-          <label>Username</label>
-          <input {...register('username', { required: 'Username is required' })} />
-          {errors.username && <p className="field-error">{errors.username.message}</p>}
-        </div>
-
-        <div className="input-group">
-          <label>First Name</label>
+          <label>First Name <span className="required-mark">*</span></label>
           <input {...register('firstName', { required: 'First name is required' })} />
           {errors.firstName && <p className="field-error">{errors.firstName.message}</p>}
         </div>
 
         <div className="input-group">
-          <label>Last Name</label>
+          <label>Last Name <span className="required-mark">*</span></label>
           <input {...register('lastName', { required: 'Last name is required' })} />
           {errors.lastName && <p className="field-error">{errors.lastName.message}</p>}
         </div>
 
         <div className="input-group">
-          <label>Email</label>
+          <label>Email <span className="required-mark">*</span></label>
           <input
             type="email"
             {...register('email', {
@@ -60,7 +80,7 @@ function Register() {
         </div>
 
         <div className="input-group">
-          <label>Password</label>
+          <label>Password <span className="required-mark">*</span></label>
           <input
             type="password"
             {...register('password', { required: 'Password is required' })}
@@ -69,7 +89,7 @@ function Register() {
         </div>
 
         <div className="input-group">
-          <label>Confirm Password</label>
+          <label>Confirm Password <span className="required-mark">*</span></label>
           <input
             type="password"
             {...register('confirmPassword', {
@@ -93,37 +113,37 @@ function Register() {
             <h3>Group Admin Request Details</h3>
 
             <div className="input-group">
-              <label>Requested Group Name</label>
+              <label>Requested Group Name <span className="required-mark">*</span></label>
               <input {...register('groupName', { required: 'Group name is required' })} />
               {errors.groupName && <p className="field-error">{errors.groupName.message}</p>}
             </div>
 
             <div className="input-group">
-              <label>Department</label>
+              <label>Department <span className="required-mark">*</span></label>
               <input {...register('department', { required: 'Department is required' })} />
               {errors.department && <p className="field-error">{errors.department.message}</p>}
             </div>
 
             <div className="input-group">
-              <label>Business Justification</label>
+              <label>Business Justification <span className="required-mark">*</span></label>
               <input {...register('justification', { required: 'Business justification is required' })} />
               {errors.justification && <p className="field-error">{errors.justification.message}</p>}
             </div>
 
             <div className="input-group">
-              <label>Expected Team Size</label>
+              <label>Expected Team Size <span className="required-mark">*</span></label>
               <input {...register('teamSize', { required: 'Expected team size is required' })} />
               {errors.teamSize && <p className="field-error">{errors.teamSize.message}</p>}
             </div>
 
             <div className="input-group">
-              <label>Manager Name</label>
+              <label>Manager Name <span className="required-mark">*</span></label>
               <input {...register('managerName', { required: 'Manager name is required' })} />
               {errors.managerName && <p className="field-error">{errors.managerName.message}</p>}
             </div>
 
             <div className="input-group">
-              <label>Manager Email</label>
+              <label>Manager Email <span className="required-mark">*</span></label>
               <input
                 type="email"
                 {...register('managerEmail', { required: 'Manager email is required' })}
@@ -132,6 +152,8 @@ function Register() {
             </div>
           </div>
         )}
+
+        <p className="required-note">* indicates a required field</p>
 
         <div className="button-row">
           <Button label="Submit" onClick={handleSubmit(onSubmit)} variant="primary" />

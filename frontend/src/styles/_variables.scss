@@ -1,8 +1,16 @@
-$primary-color: #2c3e50;
-$secondary-color: #3498db;
-$accent-color: #27ae60;
-$danger-color: #e74c3c;
-$background-color: #f4f6f8;
-$text-color: #2c3e50;
-$border-radius: 8px;
+$ink: #14213D;
+$paper: #FBFBF9;
+$accent: #0EA5A0;
+$accent-dark: #0B7A76;
+$danger: #E5484D;
+$line: #E4E2DC;
+$muted: #6B7280;
+
+// legacy aliases so existing code referencing old names still compiles
+$primary-color: $ink;
+$secondary-color: $accent;
+$danger-color: $danger;
+$background-color: $paper;
+$text-color: $ink;
+$border-radius: 10px;
 $spacing-unit: 8px;

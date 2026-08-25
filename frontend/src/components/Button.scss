@@ -1,13 +1,32 @@
 @use '../styles/variables' as *;
 
 .btn {
-  padding: $spacing-unit $spacing-unit * 2;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 .btn-primary {
-  background-color: $primary-color;
+  background-color: $accent;
   color: white;
+  flex: 1;
+}
+
+.btn-secondary {
+  background-color: #F1F3F2;
+  color: $ink;
+  flex: 1;
 }
