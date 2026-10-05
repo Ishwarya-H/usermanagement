@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
+import Button from '../components/Button/Button';
 import '../styles/_shared.scss';
-import './Login.scss';
+import './Login/Login.scss';
 
 function ForgotPassword() {
   const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm();
